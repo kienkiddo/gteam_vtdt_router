@@ -5,6 +5,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 import vn.gteam.app.properties.ConfigureAppProperties;
 import vn.gteam.app.response.BaseResponse;
 import vn.gteam.app.response.entity.GameServerResponseEntity;
@@ -36,7 +37,8 @@ public class ClientGetListGameServerController {
     }
 
     @GetMapping("/info")
-    public String getListGameServer(HttpServletRequest request){
+    public String getListGameServer(HttpServletRequest request, @RequestParam(defaultValue = "0.0.0") String version, @RequestParam(defaultValue = "0") Integer build, @RequestParam(defaultValue = "0") Integer platformType){
+        Debug.log("game server info; version = " + version + " ; build = " + build + " ; platformType = " + platformType);
         GetListGameServerResponse baseResponse = this.gameServerService.getListGameServer();
        // this.updateConvert(baseResponse, request);
         String rawJson = this.gson.toJson(baseResponse);
