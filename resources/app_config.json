@@ -1,0 +1,17 @@
+{
+  "windows": {
+    "version": "0.0.0",
+    "build": 1,
+    "url": "https://vutrudaichien.vn"
+  },
+  "android": {
+    "version": "0.0.0",
+    "build": 1,
+    "url": "https://play.google.com/store/apps/details?id=vn.gteam.grandline"
+  },
+  "ios": {
+    "version": "0.19.0",
+    "build": 1,
+    "url": "https://apps.apple.com/us/app/%C4%91%E1%BA%A1i-h%E1%BA%A3i-tr%C3%ACnh-king-of-sea/id6741032894"
+  }
+}
