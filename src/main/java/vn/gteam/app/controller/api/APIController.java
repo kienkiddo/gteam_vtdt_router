@@ -2,8 +2,8 @@ package vn.gteam.app.controller.api;
 
 import vn.gteam.app.properties.ConfigureAppProperties;
 import vn.gteam.app.response.BaseResponse;
-import vn.gteam.app.service.AppVersionService;
-import vn.gteam.app.service.GameServerService;
+import vn.gteam.app.service.common.AppVersionService;
+import vn.gteam.app.service.gameserver.GameServerDefaultService;
 import vn.gteam.lib.commom.Debug;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +17,12 @@ import java.util.Objects;
 public class APIController {
     private final ConfigureAppProperties configureAppProperties;
     private final AppVersionService appVersionService;
-    private final GameServerService gameServerService;
+    private final GameServerDefaultService gameServerDefaultService;
 
-    public APIController(ConfigureAppProperties configureAppProperties, AppVersionService appVersionService, GameServerService gameServerService){
+    public APIController(ConfigureAppProperties configureAppProperties, AppVersionService appVersionService, GameServerDefaultService gameServerDefaultService){
         this.configureAppProperties = configureAppProperties;
         this.appVersionService = appVersionService;
-        this.gameServerService = gameServerService;
+        this.gameServerDefaultService = gameServerDefaultService;
     }
 
     @GetMapping("/new-asset-version")
@@ -40,7 +40,7 @@ public class APIController {
             Debug.log("secret wrong ; value = " + secret);
             return null;
         }
-        return this.gameServerService.getListGameServer();
+        return this.gameServerDefaultService.getListGameServer();
     }
 
     @GetMapping("/game-server/detail")
@@ -49,7 +49,7 @@ public class APIController {
             Debug.log("secret wrong ; value = " + secret);
             return null;
         }
-        return this.gameServerService.getDetailGameServer(serverId);
+        return this.gameServerDefaultService.getDetailGameServer(serverId);
     }
 
 
@@ -59,6 +59,6 @@ public class APIController {
             Debug.log("secret wrong ; value = " + secret);
             return null;
         }
-        return this.gameServerService.updateStatusGameServer(serverId, status, message);
+        return this.gameServerDefaultService.updateStatusGameServer(serverId, status, message);
     }
 }

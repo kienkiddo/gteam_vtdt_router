@@ -1,4 +1,4 @@
-package vn.gteam.app.service;
+package vn.gteam.app.service.common;
 
 
 import vn.gteam.app.entity.AppVersion;

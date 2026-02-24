@@ -1,0 +1,26 @@
+{
+  "matches": {
+    "2": ["0.3.0"]
+  },
+  "asset_server": {
+    "id": 1,
+    "name": "test",
+    "ip": "103.2.225.155",
+    "port": "24101"
+  },
+  "gateway_server": {
+    "id": 1,
+    "name": "test",
+    "url": "http://103.2.225.84:8001"
+  },
+  "game_server": {
+    "id": 1,
+    "name": "Open Test",
+    "online": true,
+    "message": "",
+    "ip": "103.2.225.83",
+    "port": 9090,
+    "spring_port": 8082,
+    "sorting": 0
+  }
+}

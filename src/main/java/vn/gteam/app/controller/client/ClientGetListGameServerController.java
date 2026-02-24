@@ -6,11 +6,12 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestParam;
+import vn.gteam.app.factory.GameServerServiceFactory;
 import vn.gteam.app.properties.ConfigureAppProperties;
-import vn.gteam.app.response.BaseResponse;
 import vn.gteam.app.response.entity.GameServerResponseEntity;
 import vn.gteam.app.response.message.client.GetListGameServerResponse;
-import vn.gteam.app.service.GameServerService;
+import vn.gteam.app.service.gameserver.GameServerDefaultService;
+import vn.gteam.app.service.gameserver.GameServerService;
 import vn.gteam.lib.IpUtils;
 import vn.gteam.lib.commom.Debug;
 import vn.gteam.lib.crypt.AESCrypt;
@@ -27,20 +28,20 @@ import java.net.InetAddress;
 @RequestMapping("client/game-server")
 public class ClientGetListGameServerController {
     private final ConfigureAppProperties configureAppProperties;
-    private final GameServerService gameServerService;
+    private final GameServerServiceFactory gameServerServiceFactory;
     private final Gson gson;
 
-    public ClientGetListGameServerController(ConfigureAppProperties configureAppProperties, GameServerService gameServerService){
+    public ClientGetListGameServerController(ConfigureAppProperties configureAppProperties, GameServerServiceFactory gameServerServiceFactory){
         this.configureAppProperties = configureAppProperties;
-        this.gameServerService = gameServerService;
+        this.gameServerServiceFactory = gameServerServiceFactory;
         this.gson = new Gson();
     }
 
     @GetMapping("/info")
     public String getListGameServer(HttpServletRequest request, @RequestParam(defaultValue = "0.0.0") String version, @RequestParam(defaultValue = "0") Integer build, @RequestParam(defaultValue = "0") Integer platformType){
-        Debug.log("game server info; version = " + version + " ; build = " + build + " ; platformType = " + platformType);
-        GetListGameServerResponse baseResponse = this.gameServerService.getListGameServer();
-       // this.updateConvert(baseResponse, request);
+        GameServerService gameServerService = this.gameServerServiceFactory.make(version, build, platformType);
+        Debug.log("game server info; version = " + version + " ; build = " + build + " ; platformType = " + platformType + " ---> service = " + gameServerService.getClass().getSimpleName());
+        GetListGameServerResponse baseResponse = gameServerService.getListGameServer();
         String rawJson = this.gson.toJson(baseResponse);
         String rawText = "";
         try {
@@ -52,6 +53,7 @@ public class ClientGetListGameServerController {
         return rawText;
     }
 
+    /*
     private GetListGameServerResponse updateConvert(GetListGameServerResponse response, HttpServletRequest request){
         try {
             if (!this.isVietNamIP(request)){
@@ -78,5 +80,7 @@ public class ClientGetListGameServerController {
         Debug.log("IP = " + clientIp + " ; detected = " + response.getCountry().getIsoCode());
         return false;
     }
+
+     */
 
 }
