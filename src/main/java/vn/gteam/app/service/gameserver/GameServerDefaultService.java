@@ -34,12 +34,38 @@ public class GameServerDefaultService implements GameServerService {
         return getListGameServerResponse;
     }
 
+    public GetListGameServerResponse getListInternalGameServer(){
+        List<GameServer> gameServers = this.gameServerManager.getGameServers();
+        List<GameServer> internalGameServers = gameServers.stream()
+                .map(g -> {
+                    GameServer internal = new GameServer();
+                    internal.setId(g.getId());
+                    internal.setName(g.getName());
+                    internal.setOnline(g.isOnline());
+                    internal.setIp(g.getInternalIp());
+                    internal.setPort(g.getPort());
+                    internal.setSpringPort(g.getSpringPort());
+                    internal.setSorting(g.getSorting());
+                    return internal;
+                }).toList();
+
+        GetListGameServerResponse getListGameServerResponse = new GetListGameServerResponse();
+        getListGameServerResponse.fill(internalGameServers);
+        getListGameServerResponse.setSuccess();
+        return getListGameServerResponse;
+    }
+
     public BaseResponse getDetailGameServer(int serverId){
         GameServer gameServer = this.gameServerManager.findById(serverId);
         GatewayServer gatewayServer = this.gatewayServerManager.getFirst();
 
+        GatewayServer internalGatewayServer = new GatewayServer();
+        internalGatewayServer.setId(gatewayServer.getId());
+        internalGatewayServer.setName(gatewayServer.getName());
+        internalGatewayServer.setUrl(gatewayServer.getInternalUrl());
+
         GetDetailGameServerResponse response = new GetDetailGameServerResponse();
-        response.fill(gameServer, gatewayServer);
+        response.fill(gameServer, internalGatewayServer);
         return response.setSuccess();
     }
 

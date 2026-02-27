@@ -14,4 +14,5 @@ public class GatewayServer {
     private int id;
     private String name;
     private String url;
+    private String internalUrl;
 }

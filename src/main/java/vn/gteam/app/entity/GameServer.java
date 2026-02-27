@@ -16,6 +16,7 @@ public class GameServer {
     private boolean online;
     private String message;
     private String ip;
+    private String internalIp;
     private Integer port;
     private Integer springPort;
     private Integer sorting;

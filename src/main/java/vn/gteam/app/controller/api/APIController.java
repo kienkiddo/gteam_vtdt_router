@@ -40,7 +40,7 @@ public class APIController {
             Debug.log("secret wrong ; value = " + secret);
             return null;
         }
-        return this.gameServerDefaultService.getListGameServer();
+        return this.gameServerDefaultService.getListInternalGameServer();
     }
 
     @GetMapping("/game-server/detail")
